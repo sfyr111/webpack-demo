@@ -1,3 +1,8 @@
-import sum from './sum'
+let func = () => {}
+const n = 1
+let arr = [1, 2, 3]
+let arr2 = arr.map(item => item + 2)
 
-console.log('sum(1,2)', sum(1, 2))
+arr.includes(8)
+
+console.log(new Set(arr2));
