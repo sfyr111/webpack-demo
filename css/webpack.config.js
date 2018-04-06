@@ -19,9 +19,14 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            // loader: 'style-loader'
+            loader: 'style-loader',
+            options: {
+              insertInto: '#app', // 插入元素
+              singleton: true, // 使用 一个style 标签
+              transform: './css.transform.js', // transform 函数, 浏览器环境下 loader 插入HTML时运行
+            }
             // loader: 'style-loader/url' // style-loader/url 不常用
-            loader: 'style-loader/useable' // style-loader/url 不常用
+            // loader: 'style-loader/useable' // style-loader/useable 可控
           },
           {
             loader: 'css-loader'
