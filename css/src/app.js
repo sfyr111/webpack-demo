@@ -8,8 +8,8 @@
 /**
  * style-loader/useable
  */
-import base from './css/base.css'
-import common from './css/common.css'
+// import base from './css/base.css'
+// import common from './css/common.css'
 
 // base.use()
 // base.unuse()
@@ -21,3 +21,12 @@ import common from './css/common.css'
 //   else base.use()
 //   flag = !flag
 // }, 500)
+
+/**
+ * css-module
+ */
+import base from './css/base.css'
+import common from './css/common.css'
+
+var app = document.getElementById('app')
+app.innerHTML = `<div class="${base.wrapper}"></div>`

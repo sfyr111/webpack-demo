@@ -1,3 +1,11 @@
 html {
   background: blue;
 }
+
+.wrapper {
+  /* composes 位置 */
+  composes: border from './common.css';
+  height: 200px;
+  width: 200px;
+  background: #333;
+}
