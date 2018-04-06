@@ -1,5 +1,7 @@
 var Webpack = require('webpack')
 var path = require('path')
+var PurifyCSS = require('purifycss-webpack')
+var glob = require('glob-all')
 var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
@@ -30,7 +32,7 @@ module.exports = {
               loader: 'css-loader',
               options: {
                 // minimize: true, // 压缩
-                modules: true, // css-module
+                // modules: true, // css-module
                 localIdentName: '[path][name]_[local]_[hash:base64:5]', // css-module 命名
               }
               // loader: 'file-loader' // style-loader/url 不常用
@@ -71,6 +73,12 @@ module.exports = {
       filename: '[name].min.css', // 提取的css
       allChunks: false, // 提取css 的范围, 默认false 提取初始化的
     }),
-    new Webpack.optimize.UglifyJsPlugin() // js tree-shaking
+    new PurifyCSS({
+      paths: glob.sync([
+        path.join(__dirname, './*.html'),
+        path.join(__dirname, './src/*.js')
+      ])
+    }),
+    new Webpack.optimize.UglifyJsPlugin(), // js tree-shaking
   ]
 }
