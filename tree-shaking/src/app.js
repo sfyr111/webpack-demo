@@ -9,3 +9,6 @@ app.innerHTML = '<div class="' + base.wrapper +  '"></div>'
 
 import { a } from './common/util'
 console.log(a())
+
+import { chunk } from 'lodash'
+console.log(chunk([1, 2, 3, 4], 2));

@@ -59,6 +59,6 @@ module.exports = {
       filename: '[name].min.css', // 提取的css
       allChunks: false, // 提取css 的范围, 默认false 提取初始化的
     }),
-    new Webpack.optimize.UglifyJsPlugin()
+    new Webpack.optimize.UglifyJsPlugin() // js tree-shaking
   ]
 }
