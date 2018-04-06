@@ -1,0 +1,13 @@
+$bgcolor = #333
+
+html
+  background: blue
+
+.wrapper
+  /* 注意 composes 位置 */
+  composes: border from './common.styl'
+  height: 200px
+  width: 200px
+  background: $bgcolor
+  transition: transform 1s  
+
