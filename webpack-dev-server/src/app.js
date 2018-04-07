@@ -13,7 +13,7 @@ $.get(url, {}, function(data) {
   console.log(data);
 })
 
-// js配合模块热更新代码
+// js配合模块热更新代码 // vue-hot-loader react-hot-loader
 if (module.hot) {
   // module.hot.accept('./component/a', function() {
     // 删除之前的dom 
