@@ -23,6 +23,7 @@ module.exports = {
   // webpack-dev-server 配置
   devServer: {
     port: 9001,
+    overlay: true, // eslint 浏览器中开启
     proxy: {
       '/api': {
         target: 'https://api.github.com',
@@ -62,13 +63,21 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
+        include: [path.resolve(__dirname, 'src')],
+        exclude: [path.resolve(__dirname, 'src/libs')],
         use: [
           {
             loader: 'babel-loader',
             options: {
               presets: ['env']
             }
-          }
+          },
+          // {
+          //   loader: 'eslint-loader',
+          //   options: {
+          //     formatter: require('eslint-friendly-formatter')
+          //   }
+          // }
         ]
       },
       {
@@ -121,46 +130,46 @@ module.exports = {
         //       transform: './css.transform.js', // transform 函数, 浏览器环境下 loader 插入HTML时运行
         //     }
         //   },
-          use: [
-            {
-              // 热更新使用
-              loader: 'style-loader',
-              options: {
-                // singleton: true, // 使用 一个style 标签 和source-map 冲突
-                transform: './css.transform.js', // transform 函数, 浏览器环境下 loader 插入HTML时运行
-                sourceMap: true
-              }
-            },
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: true
-                // minimize: true, // 压缩
-                // modules: true, // css-module
-                // localIdentName: '[path][name]_[local]_[hash:base64:5]', // css-module 命名
-              }
-            },
-            {
-              loader: 'stylus-loader',
-              options: {
-                sourceMap: true
-              }
-            }
-          ]
-        // })
-      },
-      // imports 注入第三方模块
-      {
-        test: path.resolve(__dirname, 'src/app.js'),
         use: [
           {
-            loader: 'imports-loader',
+            // 热更新使用
+            loader: 'style-loader',
             options: {
-              $: 'jquery',
+              // singleton: true, // 使用 一个style 标签 和source-map 冲突
+              transform: './css.transform.js', // transform 函数, 浏览器环境下 loader 插入HTML时运行
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
+              // minimize: true, // 压缩
+              // modules: true, // css-module
+              // localIdentName: '[path][name]_[local]_[hash:base64:5]', // css-module 命名
+            }
+          },
+          {
+            loader: 'stylus-loader',
+            options: {
+              sourceMap: true
             }
           }
         ]
+        // })
       },
+      // imports 注入第三方模块
+      // {
+      //   test: path.resolve(__dirname, 'src/app.js'),
+      //   use: [
+      //     {
+      //       loader: 'imports-loader',
+      //       options: {
+      //         $: 'jquery',
+      //       }
+      //     }
+      //   ]
+      // },
       {
         test: /\.html$/,
         use: [
@@ -178,13 +187,13 @@ module.exports = {
   plugins: [
     new ExtractTextWebpackPlugin({ // 和css-module 冲突
       filename: 'css/[name]-bundle-[hash:5].css', // 提取的css
-      allChunks: false, // 提取css 的范围, 默认false 提取初始化的
+      allChunks: false // 提取css 的范围, 默认false 提取初始化的
       
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html', // 指定模板
-      // chunks: ['app'], // 指定入口 
+      // chunks: ['app'], // 指定入口
       minify: {
         // collapseWhitespace: true
       }
@@ -200,9 +209,9 @@ module.exports = {
     // 模块热更新
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
-    // 第三方全局模块注入 $ 
-    // new webpack.ProvidePlugin({
-    //   $: 'jquery' // node_modules 本地文件用 reslove alias
-    // })
+    // 第三方全局模块注入 $
+    new webpack.ProvidePlugin({
+      $: 'jquery' // node_modules 本地文件用 reslove alias
+    })
   ]
 }
