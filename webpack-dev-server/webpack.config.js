@@ -17,6 +17,9 @@ module.exports = {
     // chunkFilename: '[name].chunk.js'
   },
 
+  // js 的source-map
+  devtool: 'cheap-module-source-map', // source-map, cheap-module-source-map. eval
+
   // webpack-dev-server 配置
   devServer: {
     port: 9001,
@@ -123,20 +126,25 @@ module.exports = {
               // 热更新使用
               loader: 'style-loader',
               options: {
-                singleton: true, // 使用 一个style 标签
+                // singleton: true, // 使用 一个style 标签 和source-map 冲突
                 transform: './css.transform.js', // transform 函数, 浏览器环境下 loader 插入HTML时运行
+                sourceMap: true
               }
             },
             {
               loader: 'css-loader',
               options: {
+                sourceMap: true
                 // minimize: true, // 压缩
                 // modules: true, // css-module
                 // localIdentName: '[path][name]_[local]_[hash:base64:5]', // css-module 命名
               }
             },
             {
-              loader: 'stylus-loader'
+              loader: 'stylus-loader',
+              options: {
+                sourceMap: true
+              }
             }
           ]
         // })
