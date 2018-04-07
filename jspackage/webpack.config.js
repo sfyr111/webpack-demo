@@ -17,7 +17,7 @@ module.exports = {
   resolve: {
     alias: {
       // 本地第三方库打包
-      jquery$: path.resolve(__dirname, 'src/libs/jquery.js')
+      jquery$: path.resolve(__dirname, 'src/libs/js/jquery.js')
     }
   },
 
@@ -119,7 +119,7 @@ module.exports = {
     }),
     // 第三方全局模块注入 $ 
     new webpack.ProvidePlugin({
-      // $: 'jquery' // node_modules
+      $: 'jquery' // node_modules 本地文件用 reslove alias
     })
   ]
 }
