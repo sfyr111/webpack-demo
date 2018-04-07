@@ -17,8 +17,20 @@ module.exports = {
     // chunkFilename: '[name].chunk.js'
   },
 
+  // webpack-dev-server 配置
   devServer: {
-    port: 9001
+    port: 9001,
+    historyApiFallback: { // true
+      rewrites: [
+        {
+          from: /^\/([a-zA-Z0-9]+\/?)([a-zA-Z0-9]+)/,
+          to: function (context) {
+            return '/' + context.match[1] + context.match[2] + '.html'
+          }
+        }
+      ]
+    },
+    // inline: false // 打包状态
   },
 
   resolve: {
