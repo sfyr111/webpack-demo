@@ -10,7 +10,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: './',
+    publicPath: './', // '/' 开http-sever
     filename: '[name]-bundle-[hash:5].js',
     chunkFilename: '[name].chunk.js'
   },
@@ -48,8 +48,7 @@ module.exports = {
               name: '[name]-[hash:5].[ext]',
               limit: 1000, // 小于 value 时 base64
               publicPath: '',
-              // outputPath: 'dist/',
-              useRelativePath: true
+              outputPath: 'assets/image/',
             }
           },
           // 压缩图片
@@ -99,7 +98,18 @@ module.exports = {
             }
           }
         ]
-      }
+      },
+      // {
+      //   test: /\.html$/,
+      //   use: [
+      //     {
+      //       loader: 'html-loader',
+      //       options: {
+      //         attrs: ['img:src', 'img:data-src']
+      //       }
+      //     }
+      //   ]
+      // }
     ]
   },
 
