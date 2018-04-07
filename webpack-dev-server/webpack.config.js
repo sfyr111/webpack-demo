@@ -12,9 +12,13 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: './', // '/' 开http-sever
+    publicPath: '/', // '/' 开http-sever
     filename: 'js/[name]-bundle-[hash:5].js',
     // chunkFilename: '[name].chunk.js'
+  },
+
+  devServer: {
+    port: 9001
   },
 
   resolve: {
@@ -61,7 +65,8 @@ module.exports = {
               name: '[name]-[hash:5].[ext]',
               limit: 1000, // 小于 value 时 base64
               publicPath: '',
-              outputPath: 'assets/image/',
+              outputPath: 'dist/assets/image/',
+              // useRelativePath: true
             }
           },
           // 压缩图片
