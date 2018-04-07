@@ -33,6 +33,7 @@ module.exports = {
       }
     },
     hot: true, // 模块热更新
+    hotOnly: true, // 不通过刷新页面热更新
     historyApiFallback: { // true
       rewrites: [
         {

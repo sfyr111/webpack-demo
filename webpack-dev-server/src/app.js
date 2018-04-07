@@ -12,3 +12,14 @@ var url = '/api/users/sfyr111'
 $.get(url, {}, function(data) {
   console.log(data);
 })
+
+// js配合模块热更新代码
+if (module.hot) {
+  // module.hot.accept('./component/a', function() {
+    // 删除之前的dom 
+    // let ComponentA = require('./component/a')
+    // 重新require 进来进行操作逻辑
+    // ...
+  // })
+  module.hot.accept()
+}
