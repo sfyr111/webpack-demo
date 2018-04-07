@@ -119,6 +119,7 @@ module.exports = {
         //   },
           use: [
             {
+              // 热更新使用
               loader: 'style-loader',
               options: {
                 singleton: true, // 使用 一个style 标签
