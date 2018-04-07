@@ -30,6 +30,7 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
+              name: '[name]-[hash:5].[ext]',
               limit: 10000, // 小于 value 时 base64
               publicPath: '',
               outputPath: 'dist/',
@@ -66,6 +67,18 @@ module.exports = {
                 // localIdentName: '[path][name]_[local]_[hash:base64:5]', // css-module 命名
               }
               // loader: 'file-loader' // style-loader/url 不常用
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: [
+                  require('postcss-sprites')({
+                    spritePath: 'assets/image/sprites'
+                  }),
+                  require('postcss-cssnext')()
+                ]
+              }
             },
             {
               loader: 'stylus-loader'
