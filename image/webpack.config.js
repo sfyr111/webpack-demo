@@ -30,10 +30,19 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 5, // 小于 value 时 base64
+              limit: 10000, // 小于 value 时 base64
               publicPath: '',
               outputPath: 'dist/',
               useRelativePath: true
+            }
+          },
+          // 压缩图片
+          {
+            loader: 'img-loader',
+            options: {
+              pngquant: {
+                quality: 80
+              }
             }
           }
         ]
