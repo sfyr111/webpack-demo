@@ -27,10 +27,12 @@ module.exports = {
         changeOrigin: true, // 改变host
         logLevel: 'debug', // 控制台打印
         headers: {
-          'Cookie': 'abc=123'
+          'Cookie': 'abc=123',
+          'x-cc': 'a',
         }
       }
     },
+    hot: true, // 模块热更新
     historyApiFallback: { // true
       rewrites: [
         {
@@ -106,15 +108,23 @@ module.exports = {
       },
       {
         test: /\.styl$/,
-        use: ExtractTextWebpackPlugin.extract({
-          fallback: {
-            loader: 'style-loader',
-            options: {
-              singleton: true, // 使用 一个style 标签
-              transform: './css.transform.js', // transform 函数, 浏览器环境下 loader 插入HTML时运行
-            }
-          },
+        // 模块热更新不用 ExtractTextWebpackPlugin.extract
+        // use: ExtractTextWebpackPlugin.extract({
+        //   fallback: {
+        //     loader: 'style-loader',
+        //     options: {
+        //       singleton: true, // 使用 一个style 标签
+        //       transform: './css.transform.js', // transform 函数, 浏览器环境下 loader 插入HTML时运行
+        //     }
+        //   },
           use: [
+            {
+              loader: 'style-loader',
+              options: {
+                singleton: true, // 使用 一个style 标签
+                transform: './css.transform.js', // transform 函数, 浏览器环境下 loader 插入HTML时运行
+              }
+            },
             {
               loader: 'css-loader',
               options: {
@@ -127,7 +137,7 @@ module.exports = {
               loader: 'stylus-loader'
             }
           ]
-        })
+        // })
       },
       // imports 注入第三方模块
       {
@@ -176,7 +186,10 @@ module.exports = {
     new HtmlInlinkChunkPlugin({
       inlineChunks: ['manifest']
     }),
-    new CleanWebpackPlugin(['dist'])
+    new CleanWebpackPlugin(['dist']),
+    // 模块热更新
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     // 第三方全局模块注入 $ 
     // new webpack.ProvidePlugin({
     //   $: 'jquery' // node_modules 本地文件用 reslove alias
