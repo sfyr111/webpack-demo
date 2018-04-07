@@ -2329,6 +2329,13 @@ img-loader@^2.0.1:
     imagemin-svgo "^6.0.0"
     loader-utils "^1.1.0"
 
+imports-loader@^0.8.0:
+  version "0.8.0"
+  resolved "http://registry.npm.taobao.org/imports-loader/download/imports-loader-0.8.0.tgz#030ea51b8ca05977c40a3abfd9b4088fe0be9a69"
+  dependencies:
+    loader-utils "^1.0.2"
+    source-map "^0.6.1"
+
 indent-string@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/indent-string/download/indent-string-2.1.0.tgz#8e2d48348742121b4a8218b7a137e9a52049dc80"

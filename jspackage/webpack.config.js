@@ -108,6 +108,18 @@ module.exports = {
             }
           ]
         })
+      },
+      // imports 注入第三方模块
+      {
+        test: path.resolve(__dirname, 'src/app.js'),
+        use: [
+          {
+            loader: 'imports-loader',
+            options: {
+              $: 'jquery',
+            }
+          }
+        ]
       }
     ]
   },
@@ -118,8 +130,8 @@ module.exports = {
       allChunks: false, // 提取css 的范围, 默认false 提取初始化的
     }),
     // 第三方全局模块注入 $ 
-    new webpack.ProvidePlugin({
-      $: 'jquery' // node_modules 本地文件用 reslove alias
-    })
+    // new webpack.ProvidePlugin({
+    //   $: 'jquery' // node_modules 本地文件用 reslove alias
+    // })
   ]
 }
