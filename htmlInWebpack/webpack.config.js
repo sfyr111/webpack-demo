@@ -2,6 +2,7 @@ var webpack = require('webpack')
 var path = require('path')
 var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var HtmlInlinkChunkPlugin = require('html-webpack-inline-chunk-plugin')
 
 module.exports = {
   entry: {
@@ -24,6 +25,17 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['env']
+            }
+          }
+        ]
+      },
       {
         test: /\.(eot|woff2?|woff|ttf|svg)$/,
         use: [
@@ -122,11 +134,17 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html', // 指定模板
-      chunks: ['app'], // 指定入口 
+      // chunks: ['app'], // 指定入口 
       minify: {
         // collapseWhitespace: true
       }
       // inject: false, // 自动生成注入资源
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest'
+    }),
+    new HtmlInlinkChunkPlugin({
+      inlineChunks: ['manifest']
     }),
     // 第三方全局模块注入 $ 
     // new webpack.ProvidePlugin({
