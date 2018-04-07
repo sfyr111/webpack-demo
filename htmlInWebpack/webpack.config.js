@@ -3,6 +3,7 @@ var path = require('path')
 var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var HtmlInlinkChunkPlugin = require('html-webpack-inline-chunk-plugin')
+var CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -12,8 +13,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: './', // '/' 开http-sever
-    filename: '[name]-bundle-[hash:5].js',
-    chunkFilename: '[name].chunk.js'
+    filename: 'js/[name]-bundle-[hash:5].js',
+    // chunkFilename: '[name].chunk.js'
   },
 
   resolve: {
@@ -146,6 +147,7 @@ module.exports = {
     new HtmlInlinkChunkPlugin({
       inlineChunks: ['manifest']
     }),
+    new CleanWebpackPlugin(['dist'])
     // 第三方全局模块注入 $ 
     // new webpack.ProvidePlugin({
     //   $: 'jquery' // node_modules 本地文件用 reslove alias
