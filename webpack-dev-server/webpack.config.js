@@ -20,9 +20,21 @@ module.exports = {
   // webpack-dev-server 配置
   devServer: {
     port: 9001,
+    proxy: {
+      '/api': {
+        target: 'https://api.github.com',
+        pathRewrite: {"^/api" : ""},
+        changeOrigin: true, // 改变host
+        logLevel: 'debug', // 控制台打印
+        headers: {
+          'Cookie': 'abc=123'
+        }
+      }
+    },
     historyApiFallback: { // true
       rewrites: [
         {
+          // pages/a => pages/a.html
           from: /^\/([a-zA-Z0-9]+\/?)([a-zA-Z0-9]+)/,
           to: function (context) {
             return '/' + context.match[1] + context.match[2] + '.html'
