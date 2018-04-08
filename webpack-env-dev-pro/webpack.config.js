@@ -27,7 +27,7 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'https://api.github.com',
-        pathRewrite: {"^/api" : ""},
+        pathRewrite: {'^/api' : ''},
         changeOrigin: true, // 改变host
         logLevel: 'debug', // 控制台打印
         headers: {
@@ -48,7 +48,7 @@ module.exports = {
           }
         }
       ]
-    },
+    }
     // inline: false // 打包状态
   },
 
