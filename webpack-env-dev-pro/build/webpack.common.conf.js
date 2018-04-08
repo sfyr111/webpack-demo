@@ -1,4 +1,6 @@
 const path = require('path')
+const webpack = require('webpack')
+
 const productionConfig = require('./webpack.prod.conf') 
 const developmentConfig = require('./webpack.dev.conf') 
 
@@ -36,12 +38,12 @@ const generateConfig = env => {
         plugins: [
           require('postcss-cssnext')()
         ].concat(
-          env === 'production' 
-          ? require('postcss-sprites')({
+          env === 'production'
+            ? require('postcss-sprites')({
               spritePath: 'dist/assets/image/sprites',
-              retina: true,
+              retina: true
             })
-          : []
+            : []
         )
       }
     },
@@ -54,52 +56,52 @@ const generateConfig = env => {
   ]
 
   const styleLoader = env === 'production'
-      ? extractLess.extract({
-          fallback: 'style-loader',
-          use: cssLoaders
-      })
-      : [{ loader: 'style-loader' }].concat(cssLoaders)
+    ? extractLess.extract({
+      fallback: 'style-loader',
+      use: cssLoaders
+    })
+    : [{ loader: 'style-loader' }].concat(cssLoaders)
 
   const fileLoader =  env === 'development' 
-      ? [{
-            loader: 'file-loader',
-            options: {
-              name: '[name]-[hash:5].[ext]',
-              outputPath: 'assets/image/'
-            }
-          }]
-      : [{
-          loader: 'url-loader',
-          options: {
-            name: '[name]-[hash:5].[ext]',
-            limit: 1000,
-            outputPath: 'assets/image'
-          }
-        }]
+    ? [{
+      loader: 'file-loader',
+      options: {
+        name: '[name]-[hash:5].[ext]',
+        outputPath: 'assets/image/'
+      }
+    }]
+    : [{
+      loader: 'url-loader',
+      options: {
+        name: '[name]-[hash:5].[ext]',
+        limit: 1000,
+        outputPath: 'assets/image'
+      }
+    }]
 
   return {
     entry: {
       app: './src/app.js'
     },
-  
+
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, '../dist'),
       publicPath: '/',
       filename: 'js/[name]-bundle-[hash:5].js'
     },
-  
+
     resolve: {
       alias: {
-        jquery$: path.resolve(__dirname, 'src/libs/jquery.js')
+        jquery$: path.resolve(__dirname, '../src/libs/js/jquery.js')
       }
     },
-  
+
     module: {
       rules: [
         {
           test: /\.js$/,
-          include: [path.resolve(__dirname, 'src')],
-          exclude: [path.resolve(__dirname, 'src/libs')],
+          include: [path.resolve(__dirname, '../src')],
+          exclude: [path.resolve(__dirname, '../src/libs')],
           use: scriptLoader
         },
         {
@@ -111,18 +113,31 @@ const generateConfig = env => {
           use: fileLoader.concat(
             env === 'production'
               ? {
-                  loader: 'img-loader',
-                  options: {
-                    pngquant: {
-                      quality: 80
-                    }
-                  }     
+                loader: 'img-loader',
+                options: {
+                  pngquant: {
+                    quality: 80
+                  }
                 }
+              }
               : [])
         },
         {
-          test: /\.(eot|woff2|ttf|svg)$/,
+          test: /\.(eot|woff2?|ttf|svg)$/,
           use: fileLoader
+        },
+        {
+          test: /\.html$/,
+          use: [
+            {
+              loader: 'html-loader',
+              options: {
+                attrs: ['img:src', 'img:data-src'],
+                minimize: true,
+                interpolate: true
+              }
+            }
+          ]
         }
       ]
     },
