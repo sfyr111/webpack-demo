@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "server": "webpack-dev-server"
+    "server": "webpack-dev-server --env development --open --config build/webpack.common.conf.js",
+    "build": "webpack-dev-server --env production --config build/webpack.common.conf.js"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
