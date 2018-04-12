@@ -6,7 +6,9 @@
   "scripts": {
     "server": "webpack-dev-server --env development --open --config build/webpack.common.conf.js",
     "build": "webpack --env production --config build/webpack.common.conf.js",
-    "analyz": "webpack --env production --profile --json > stats.json"
+    "analyz": "webpack --env production --profile --json > stats.json",
+    "build:multi": "parallel-webpack --config webpack.config.multi.js",
+    "build:single": "parallel-webpack --config webpack.config.single.js"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
@@ -32,11 +34,13 @@
     "img-loader": "^2.0.1",
     "imports-loader": "^0.8.0",
     "lodash": "^4.17.5",
+    "parallel-webpack": "^2.3.0",
     "postcss-cssnext": "^3.1.0",
     "postcss-loader": "^2.1.3",
     "postcss-sprites": "^4.2.1",
     "purify-css": "^1.2.5",
     "purifycss-webpack": "^0.7.0",
+    "react": "^16.3.1",
     "style-loader": "^0.20.3",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
